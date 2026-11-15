@@ -28,3 +28,10 @@ target = "/home/vscode/.agents"
 compose = "recipes/ubuntu/compose.yaml"
 service = "workspace"
 volumes = ["omp", "agents"]
+
+# The `r` recipe.
+[recipes.r]
+extends = "ubuntu"
+compose = "recipes/r/compose.yaml"
+service = "workspace"
+

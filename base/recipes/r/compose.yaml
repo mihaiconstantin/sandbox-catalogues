@@ -1,0 +1,13 @@
+services:
+    workspace:
+        # The `R` development image.
+        image: mihaiconstantin/sandbox-catalogues/base/r
+
+        # Build the image from the local `Dockerfile`.
+        build:
+            context: .
+            dockerfile: recipes/r/Dockerfile
+
+            # Make the base `Ubuntu` image available for the build.
+            additional_contexts:
+                base-ubuntu: service:ubuntu
