@@ -12,13 +12,13 @@ A catalogue defines the recipes that
 development boxes from Docker images. Below you can find an overview of the
 catalogues (i.e., and their recipes) that are currently available.
 
-### `default` catalogue
+### `base` catalogue
 
-| Recipe  | Extends | Default | Description                                                                   |
-| ------- | ------- | ------- | ----------------------------------------------------------------------------- |
-| `base`  | none    | yes     | `Ubuntu` 26.04 with development tools, `uv`, `omp`, and shared configuration. |
-| `r`     | `base`  | no      | Adds `R`, its development headers, and the `arf` console.                     |
-| `latex` | `base`  | no      | Adds the full `TeX Live` distribution and its helper packages.                |
+|  Recipe  | Extends  | Default | Description                                    |
+| :------: | :------: | :-----: | ---------------------------------------------- |
+| `ubuntu` |    -     |   yes   | `Ubuntu` 26.04 with various development tools. |
+|   `r`    | `ubuntu` |   no    | Adds `R` and the `arf` console.                |
+| `latex`  | `ubuntu` |   no    | Adds the full `TeX Live` distribution.         |
 
 ## More information
 
