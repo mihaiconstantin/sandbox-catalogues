@@ -35,3 +35,8 @@ extends = "ubuntu"
 compose = "recipes/r/compose.yaml"
 service = "workspace"
 
+# The `latex` recipe.
+[recipes.latex]
+extends = "ubuntu"
+compose = "recipes/latex/compose.yaml"
+service = "workspace"
