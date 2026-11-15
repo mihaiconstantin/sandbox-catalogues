@@ -1,0 +1,71 @@
+services:
+    # Service to build the reusable Ubuntu development image.
+    ubuntu:
+        # Include this service when the build-only profile is enabled.
+        profiles:
+            - build-only
+
+        # Build the image from the local `Dockerfile.`
+        build:
+            context: .
+            dockerfile: recipes/ubuntu/Dockerfile
+
+    workspace:
+        # The Ubuntu development image.
+        image: mihaiconstantin/sandbox-catalogues/base/ubuntu
+
+        # Identify containers managed by the `sandbox` CLI.
+        labels:
+            sb.managed: "true"
+            sb.project: ${SB_PROJECT_NAME:?Set SB_PROJECT_NAME.}
+
+        # Build the image from the local `Dockerfile.`
+        build:
+            context: .
+            dockerfile: recipes/ubuntu/Dockerfile
+
+        # Set the working directory.
+        working_dir: /projects/${SB_PROJECT_NAME:?Set `SB_PROJECT_NAME` to your project name.}
+
+        # Use the existing non-root developer account.
+        user: vscode
+
+        # Keep the container available for interactive sessions.
+        command:
+          - sleep
+          - infinity
+
+        # Keep things tidy.
+        init: true
+
+        # Keep the container available for interactive sessions.
+        stdin_open: true
+        tty: true
+
+        # Drop unnecessary network raw-socket access and avoid privileged mode.
+        privileged: false
+        cap_drop:
+            - NET_RAW
+
+        # Bound container resource usage.
+        mem_limit: 4g
+        cpus: 4.0
+        pids_limit: 512
+
+        # Mount...
+        volumes:
+            # ...the host project directory via the `SB_PROJECT_DIRECTORY` environment.
+            - type: bind
+              source: ${SB_PROJECT_DIRECTORY:?Set `SB_PROJECT_DIRECTORY` to your project directory.}
+              target: /projects/${SB_PROJECT_NAME:?Set `SB_PROJECT_NAME` to your project name.}
+              bind:
+                  # Fail rather than silently creating a missing host directory.
+                  create_host_path: false
+
+# Specify the default network for the `sandbox` project.
+networks:
+    default:
+        # Identify networks managed by the `sandbox` CLI.
+        labels:
+            sb.managed: "true"
+            sb.project: ${SB_PROJECT_NAME:?Set SB_PROJECT_NAME.}

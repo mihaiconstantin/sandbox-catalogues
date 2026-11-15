@@ -3,3 +3,28 @@
 name = "base"
 version = "0.1.0"
 schema_version = 1
+
+# The recipe used when `--recipe` is omitted.
+default_recipe = "ubuntu"
+
+# Define the volumes used by the recipes in the catalogue.
+
+# The `.omp/` state and configuration.
+[volumes.omp]
+name = "omp-state"
+scope = "shared"
+target = "/home/vscode/.omp"
+
+# The `.agents/` state and configuration.
+[volumes.agents]
+name = "agents-state"
+scope = "shared"
+target = "/home/vscode/.agents"
+
+# Specify the recipes available in the catalogue.
+
+# The `ubuntu` recipe.
+[recipes.ubuntu]
+compose = "recipes/ubuntu/compose.yaml"
+service = "workspace"
+volumes = ["omp", "agents"]

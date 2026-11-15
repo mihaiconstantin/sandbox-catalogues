@@ -1,0 +1,28 @@
+# Keep things out of the build context.
+**/.git
+**/.gitignore
+**/.env
+**/.env.*
+**/*.key
+**/*.pem
+**/secrets/
+
+# Exclude `python` and tool caches.
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.ruff_cache/
+**/.mypy_cache/
+**/.venv/
+**/.venv-*/
+**/node_modules/
+
+# Exclude editor and `OS` artifacts.
+**/.DS_Store
+**/.idea/
+**/.vscode/
+**/*.swp
+**/*.swo
+**/*~
+**/*.log
+**/*.tmp
