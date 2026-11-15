@@ -1,0 +1,32 @@
+# Environments
+.env
+env/
+venv/
+.venv-*/
+ENV/
+env.bak/
+
+# Ignore temporary files.
+**/temp-*
+.temp*
+
+# Ignore `.DS_Store` files.
+**.DS_Store
+
+# Ignore `.vscode/`.
+.vscode/
+
+# Archives.
+archive/
+
+# Ignore agent files.
+.agents/
+
+# Ignore agents workspace files.
+.scratch/
+
+# Ignore `AGENTS.md`.
+AGENTS.md
+
+# Ignore `.worktrees/`.
+.worktrees/
