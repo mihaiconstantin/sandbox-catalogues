@@ -70,9 +70,9 @@ COPY --chown=vscode:vscode "config/.vimrc" /home/vscode/.vimrc
 # Copy the shell aliases.
 COPY --chown=vscode:vscode "scripts/aliases.sh" /home/vscode/.scripts/aliases.sh
 
-# Ensure the aliases are loaded `bash` and `zsh`.
-RUN echo "source /home/vscode/.scripts/aliases.sh" >> /home/vscode/.bashrc \
-    && echo "source /home/vscode/.scripts/aliases.sh" >> /home/vscode/.zshrc
+# Ensure the aliases are loaded in `zsh`.
+RUN echo "source /home/vscode/.scripts/aliases.sh" >> /home/vscode/.zshrc
+
 
 # Adjust `omp` options.
 RUN omp config set secrets.enabled true \

@@ -14,7 +14,7 @@ _git_parse_C() {
         # If there are fewer than two arguments.
         if (( $# < 2 )); then
             # User feedback.
-            printf '%s\n' "${funcstack[2]:-${FUNCNAME[1]:-unknown}}: -C requires a directory" >&2
+            print -u2 -- "${funcstack[2]}: -C requires a directory"
 
             # Return an error.
             return 2
@@ -242,52 +242,49 @@ gw() {
 }
 
 
-# If the shell is `zsh`, define and register the completions.
-if [[ -n "${ZSH_VERSION-}" ]]; then
-    # Define a reusable completion function for custom `git` functions.
-    _git_function_completion() {
-        # Initialize the internal `git` command index.
-        local -i __git_cmd_idx
+# Define a reusable completion function for custom `git` functions.
+_git_function_completion() {
+    # Initialize the internal `git` command index.
+    local -i __git_cmd_idx
 
-        # Collect leading `-C` arguments for repository-aware completion.
-        local -a __git_C_args
-        local -i index
+    # Collect leading `-C` arguments for repository-aware completion.
+    local -a __git_C_args
+    local -i index
 
-        # For each argument in the command line, starting from the second one.
-        for (( index = 2; index + 1 < CURRENT; index += 2 )); do
-            # If the argument is not `-C`, break the loop.
-            [[ "${words[index]}" == "-C" ]] || break
+    # For each argument in the command line, starting from the second one.
+    for (( index = 2; index + 1 < CURRENT; index += 2 )); do
+        # If the argument is not `-C`, break the loop.
+        [[ "${words[index]}" == "-C" ]] || break
 
-            # Otherwise, append the `-C` argument and its value to the `__git_C_args` array.
-            __git_C_args+=( "-C" "${words[index+1]}" )
-        done
+        # Otherwise, append the `-C` argument and its value to the `__git_C_args` array.
+        __git_C_args+=( "-C" "${words[index+1]}" )
+    done
 
-        # If completing the directory immediately after a leading `-C` option.
-        if (( index == CURRENT - 1 )) && [[ "${words[index]}" == "-C" ]]; then
-            # Delegate directory completion to `zsh`.
-            _directories
+    # If completing the directory immediately after a leading `-C` option.
+    if (( index == CURRENT - 1 )) && [[ "${words[index]}" == "-C" ]]; then
+        # Delegate directory completion to `zsh`.
+        _directories
 
-            # Return without invoking `git` completion.
-            return
-        fi
+        # Return without invoking `git` completion.
+        return
+    fi
 
-        # Delegate completion to existing `git` completion function.
-        _git
-    }
+    # Delegate completion to existing `git` completion function.
+    _git
+}
 
-    # Associate each `git` alias with its corresponding completion.
-    compdef _git_function_completion \
-        gl=git-log \
-        gll=git-log \
-        gd=git-diff \
-        gt=git-rev-list \
-        gc=git-commit \
-        gpp=git-pull \
-        gs=git-status \
-        gk=git-checkout \
-        gb=git-branch \
-        gw=git-worktree
-fi
+# Associate each `git` alias with its corresponding completion.
+compdef _git_function_completion \
+    gl=git-log \
+    gll=git-log \
+    gd=git-diff \
+    gt=git-rev-list \
+    gc=git-commit \
+    gpp=git-pull \
+    gs=git-status \
+    gk=git-checkout \
+    gb=git-branch \
+    gw=git-worktree
 
 #endregion
 
