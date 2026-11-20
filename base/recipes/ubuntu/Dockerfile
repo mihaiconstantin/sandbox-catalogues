@@ -46,6 +46,9 @@ ENV HOME="/home/vscode" \
     EDITOR="vim" \
     VISUAL="vim"
 
+# Create the global `npm` prefix directory.
+RUN mkdir -p "${NPM_CONFIG_PREFIX}/lib"
+
 # Install user-owned `uv`.
 RUN curl -LsSf "https://astral.sh/uv/install.sh" -o /tmp/install-uv.sh \
     && UV_INSTALL_DIR="${HOME}/.local/bin" UV_NO_MODIFY_PATH=1 sh /tmp/install-uv.sh \
