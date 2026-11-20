@@ -73,6 +73,9 @@ COPY --chown=vscode:vscode "scripts/aliases.sh" /home/vscode/.scripts/aliases.sh
 # Ensure the aliases are loaded in `zsh`.
 RUN echo "source /home/vscode/.scripts/aliases.sh" >> /home/vscode/.zshrc
 
+# Configure `git`.
+RUN git config --global worktree.useRelativePaths true \
+    && git config --global user.useConfigOnly true
 
 # Adjust `omp` options.
 RUN omp config set secrets.enabled true \
